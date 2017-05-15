@@ -1,0 +1,62 @@
+##############################################################
+#SCRIPT FOR SPEEDING UP and RECORDING the MULTIPLIER SYNTHESIS#
+# analyzing and checking vhdl netlist#
+# here the analyze command is used for each file from bottom to top #
+##############################################################
+# fill these lines with your files ...
+
+analyze -library WORK -format vhdl {registerfile.vhd}
+
+##############################################################
+# choose the architecture you want
+
+elaborate register_file -architecture A -library WORK -parameters "nBitsData = 64, nBitsAddr = 5"
+
+##########################################
+# first compilation, without constraints #
+
+compile 
+
+# reporting timing and area after the first synthesis without constraints #
+
+report_timing > REG_timing_1t.rpt
+report_area > REG_timing_1a.rpt
+
+####################
+# first constraint #
+# it defines a clock signal with a fixed period which constrains all reg-to-reg paths in the design #
+
+create_clock -name "CLK" -period 2 CLK
+
+#######################################
+# second compilation, with contraints #
+
+compile
+
+# reporting timing and area after the second synthesis with clock constraint #
+
+report_timing > REG_timing_2t.rpt
+report_area > REG_timing_2a.rpt
+
+####################
+# second constraint #
+# max delay setting #
+
+set_max_delay 2 -from [all_inputs] -to [all_outputs]
+
+#######################################
+# third compilation, with contraints #
+
+compile
+
+# reporting timing and area after the third synthesis with delay constraint #
+
+report_timing > REG_timing_3t.rpt
+report_area > REG_timing_3a.rpt
+
+# saving files
+
+
+write -hierarchy -format ddc -output REG-behavioural-topt.ddc
+write -hierarchy -format vhdl -output REG-behavioural-topt.vhdl
+write -hierarchy -format verilog -output REG-behavioural-topt.v
