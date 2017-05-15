@@ -9,7 +9,7 @@ entity controUnit is
 
     generic (
         -- Number of windows
-        f_windows       : integer := 3;
+        f_windows       : integer := f_windows_const;
         -- Number of windows binary
         size_windows    : integer := size_windows_const
     );
@@ -70,11 +70,15 @@ begin
 
                         when sReset =>
 
-                            cwp <= (others => '0');
+                            --cwp <= (others => '1');
+									 cwp <= std_logic_vector(to_unsigned(f_windows, cwp'length)) - 1;
                             swp <= (others => '0');
                             canRestore <= (others => '0');
                             canSave <= std_logic_vector(to_unsigned(f_windows, canSave'length));
-                            nextState <= sWork;
+									 fill <= '0';
+									 spill <= '0';
+									 nextState <= sWork;
+									 
                         when sWork =>
 
                             if(call = '1') then
@@ -82,10 +86,15 @@ begin
                                 canRestore <= canRestore + 1;
                                 canSave <= canSave - 1;
                                 -- todo
-                                cwp_var := (cwp_var + 1) mod f_windows;
+                                --cwp_var := (cwp_var + 1) mod f_windows;
+										  cwp_var := cwp_var + 1;
+										  if(cwp_var = f_windows) then
+											
+											cwp_var := 0;
+										  end if;
                                 cwp <= std_logic_vector(to_unsigned(cwp_var, cwp'length));
                                 nextState <= sCall;
-                            elsif (ret = '1') then
+                            elsif(ret = '1') then
 
                                 canRestore <= canRestore - 1;
                                 canSave <= canSave + 1;
@@ -104,7 +113,12 @@ begin
                             if(canSave = (canSave'range => '0')) then
 
                                 spill <= '1';
-                                swp_var := (swp_var + 1) mod f_windows;
+                                --swp_var := (swp_var + 1) mod f_windows;
+										  swp_var := swp_var + 1;
+										  if(swp_var = f_windows) then
+											
+											swp_var := 0;
+										  end if;
                                 swp <= std_logic_vector(to_unsigned(swp_var, swp'length));
                                 canSave <= canSave + 1;
                                 canRestore <= canRestore - 1;
@@ -131,18 +145,20 @@ begin
                                 nextState <= sWork;
                             end if;
                         when sSpill =>
-                            spill <= '0';
+                            
                             if(mmu_done = '1') then
-
+											
+										  spill <= '0';
                                 nextState <= sWork;
                             else
 
                                 nextState <= sSpill;
                             end if;
                         when sFill =>
-                            fill <= '0';
+                            
                             if(mmu_done = '1') then
 
+										  fill <= '0';
                                 nextState <= sWork;
                             else
 
