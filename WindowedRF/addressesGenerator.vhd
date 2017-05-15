@@ -2,6 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.functions.all;
+use work.constants.all;
 
 entity addressesGenerator is
 
@@ -15,11 +16,11 @@ entity addressesGenerator is
         -- Number of windows
         f_windows              : integer := 3;
         -- Address size for the external address (virtual address)
-        size_ext_addr          : integer := log2(m_global + (n_in_out_local*3));
+        size_ext_addr          : integer := log2(m_global_const + (n_in_out_local_const*3));
         -- Address size for the external address (physical address)
-        size_int_addr          : integer := log2(m_global + (n_in_out_local*2)*f_windows + n_in_out_local);
+        size_int_addr          : integer := log2(m_global_const + (n_in_out_local_const*2)*f_windows_const + n_in_out_local_const);
         -- Number of windows binary
-        size_windows           : integer := log2(f_windows)
+        size_windows           : integer := log2(f_windows_const)
     );
     port (
         -- Virtual address input
@@ -47,9 +48,9 @@ begin
 
         begin
             cwp                := to_integer(unsigned(cwp_in));
-            addr_read_one      : to_integer(unsigned(addr_read_one_in));
-            addr_read_two      : to_integer(unsigned(addr_read_two_in));
-            addr_write         : to_integer(unsigned(addr_write_in));
+            addr_read_one      := to_integer(unsigned(addr_read_one_in));
+            addr_read_two      := to_integer(unsigned(addr_read_two_in));
+            addr_write         := to_integer(unsigned(addr_write_in));
 
             -- Translates the virtual address to physical one
             -- physical address = virtual address + cwp*(2*n_in_out_local)

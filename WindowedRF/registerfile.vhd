@@ -1,7 +1,8 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
-use WORK.all;
+use work.constants.all;
+use work.functions.all;
 
 entity register_file is
  generic ( nBitsData : integer := 64;

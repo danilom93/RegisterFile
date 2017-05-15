@@ -1,6 +1,9 @@
 library ieee;
+use IEEE.numeric_std.all;
 use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
 use work.functions.all;
+use work.constants.all;
 
 entity controUnit is
 
@@ -8,7 +11,7 @@ entity controUnit is
         -- Number of windows
         f_windows       : integer := 3;
         -- Number of windows binary
-        size_windows    : integer := log2(f_windows)
+        size_windows    : integer := size_windows_const
     );
 
     port (
@@ -22,8 +25,7 @@ entity controUnit is
 
         fill            : out std_logic;
         spill           : out std_logic;
-        cwp_out         : out std_logic_vector(size_windows-1 downto 0);
-        swp_out         : out std_logic_vector(size_windows-1 downto 0)
+        cwp_out         : out std_logic_vector(size_windows-1 downto 0)
     );
 end entity;
 
@@ -154,5 +156,4 @@ begin
         end process;
 
         cwp_out <= cwp;
-        swp_out <= swp;
 end architecture;
