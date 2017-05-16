@@ -1,0 +1,27 @@
+Warning: Design 'windowedRegisterFile_size_word32_m_global5_n_in_out_local2_f_windows4_size_ext_addr4' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : area
+Design : windowedRegisterFile_size_word32_m_global5_n_in_out_local2_f_windows4_size_ext_addr4
+Version: Z-2007.03-SP1
+Date   : Tue May 16 13:31:03 2017
+****************************************
+
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /home/mariagrazia.graziano/do/libnangate/NangateOpenCellLibrary_typical_ecsm.db)
+
+Number of ports:              119
+Number of nets:               137
+Number of cells:                3
+Number of references:           3
+
+Combinational area:       4458.957981
+Noncombinational area:    5396.341813
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:          9855.299805
+Total area:                 undefined
+
+Information: This design contains black box (unknown) components. (RPT-8)
+1

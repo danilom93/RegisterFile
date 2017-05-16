@@ -1,0 +1,38 @@
+##############################################################
+# analyzing and checking vhdl netlist#
+# here the analyze command is used for each file from bottom to top #
+##############################################################
+# fill these lines with your files ...
+
+analyze -library WORK -format vhdl {constants.vhd}
+analyze -library WORK -format vhdl {functions.vhd}
+analyze -library WORK -format vhdl {controlUnit.vhd}
+analyze -library WORK -format vhdl {addressGenerator.vhd}
+analyze -library WORK -format vhdl {registerfile.vhd}
+analyze -library WORK -format vhdl {windowedRegisterFile.vhd}
+
+##############################################################
+# choose the architecture you want
+
+elaborate windowedRegisterFile -architecture structural -library WORK -parameters "size_word = 32, m_global = 5, n_in_out_local = 2, f_windows = 4, size_ext_addr = 4"
+
+####################
+# Clock constraint #
+
+create_clock -name "CLK" -period 1 clock
+
+################################
+# compilation, with constraint #
+
+compile 
+
+# reporting timing and area after the first synthesis without constraints #
+
+report_timing > WREG_timing_1t.rpt
+report_area > WREG_timing_1a.rpt
+
+# saving files
+
+write -hierarchy -format ddc -output WREG-structural.ddc
+write -hierarchy -format vhdl -output WREG-structural.vhdl
+write -hierarchy -format verilog -output WREG-structural.v

@@ -1,0 +1,63 @@
+Warning: Design 'windowedRegisterFile_size_word32_m_global5_n_in_out_local2_f_windows4_size_ext_addr4' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Information: Updating design information... (UID-85)
+Warning: Design 'windowedRegisterFile_size_word32_m_global5_n_in_out_local2_f_windows4_size_ext_addr4' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Information: Timing loop detected. (OPT-150)
+	m_CU/canSave_reg[1]/G m_CU/canSave_reg[1]/Q m_CU/U39/A1 m_CU/U39/ZN m_CU/U14/A m_CU/U14/ZN m_CU/U22/A1 m_CU/U22/ZN m_CU/U6/A1 m_CU/U6/ZN m_CU/U7/B1 m_CU/U7/ZN 
+Information: Timing loop detected. (OPT-150)
+	m_CU/canSave_reg[0]/G m_CU/canSave_reg[0]/Q m_CU/U39/A2 m_CU/U39/ZN m_CU/U14/A m_CU/U14/ZN m_CU/U22/A1 m_CU/U22/ZN m_CU/U6/A1 m_CU/U6/ZN m_CU/U7/B1 m_CU/U7/ZN 
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : windowedRegisterFile_size_word32_m_global5_n_in_out_local2_f_windows4_size_ext_addr4
+Version: Z-2007.03-SP1
+Date   : Tue May 16 13:31:03 2017
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+  Startpoint: write_en (input port)
+  Endpoint: m_RF/REGISTERS_reg[4][0]
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  windowedRegisterFile_size_word32_m_global5_n_in_out_local2_f_windows4_size_ext_addr4
+                     5K_hvratio_1_1        NangateOpenCellLibrary
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock (input port clock) (rise edge)                    0.00       0.00
+  input external delay                                    0.00       0.00 r
+  write_en (in)                                           0.00       0.00 r
+  m_RF/WR (register_file_nBitsData32_nBitsAddr5)          0.00       0.00 r
+  m_RF/U3049/ZN (INV_X1)                                  0.02       0.02 f
+  m_RF/U1024/ZN (NOR3_X1)                                 0.11       0.14 r
+  m_RF/U757/ZN (NAND3_X1)                                 0.07       0.21 f
+  m_RF/U657/ZN (OAI21_X1)                                 0.06       0.27 r
+  m_RF/U452/Z (BUF_X1)                                    0.04       0.31 r
+  m_RF/U89/Z (BUF_X1)                                     0.10       0.41 r
+  m_RF/U656/Z (MUX2_X1)                                   0.09       0.49 f
+  m_RF/REGISTERS_reg[4][0]/D (DFF_X1)                     0.01       0.50 f
+  data arrival time                                                  0.50
+
+  clock CLK (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  m_RF/REGISTERS_reg[4][0]/CK (DFF_X1)                    0.00       1.00 r
+  library setup time                                     -0.04       0.96
+  data required time                                                 0.96
+  --------------------------------------------------------------------------
+  data required time                                                 0.96
+  data arrival time                                                 -0.50
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.46
+
+
+1
