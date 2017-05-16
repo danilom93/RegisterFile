@@ -4,6 +4,7 @@ use ieee.numeric_std.all;
 use work.functions.all;
 use work.constants.all;
 
+-- AddressesGenerator converts the virtual addresses into physical, considering the current windows pointer cwp
 entity addressesGenerator is
 
     generic (
@@ -39,8 +40,10 @@ architecture behavioral of addressesGenerator is
 
 begin
 
+    -- Process used to compute the addresses
     addr_gen                   : process (addr_read_one_in, addr_read_two_in, addr_write_in, cwp_in)
 
+        -- Variables used into the process
         variable cwp           : integer range 0 to f_windows;
         variable addr_read_one : integer range 0 to size_ext_addr;
         variable addr_read_two : integer range 0 to size_ext_addr;
@@ -53,14 +56,14 @@ begin
             addr_write         := to_integer(unsigned(addr_write_in));
 
             -- Translates the virtual address to physical one
-            -- physical address = virtual address + cwp*(2*n_in_out_local)
-            -- first of all we should check if it is a global register
+            -- Physical address = virtual address + cwp*(2*n_in_out_local)
+            -- First of all we should check if the virtual address refers to a global register
 
             if(addr_read_one < m_global) then
-                -- It is a global register
+                -- If it is a global register, the physical address will be just the virtual one
                 addr_read_one_out <= '0' & addr_read_one_in;
             else
-                -- We must add the offset to reach the physical address
+                -- Otherwise we must add the offset to reach the right physical address
                 addr_read_one_out <= std_logic_vector(to_unsigned(cwp*(2*n_in_out_local) + addr_read_one, addr_read_one_out'length));
             end if;
 
